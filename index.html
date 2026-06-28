@@ -830,9 +830,10 @@ footer{background:var(--navy);color:#9eabbd;padding:54px 0 28px;border-top:1px s
             <input type="number" name="experience" placeholder="Enter experience" min="0" max="80" inputmode="numeric">
             <span class="err-msg">Please enter your Year of exp.</span>
           </div>
-          <div class="field" id="field-location">
+          <div class="field" id="field-location" style="position:relative">
             <label>Your Service Location</label>
-            <input type="text" id="locationInput" name="location" placeholder="Enter city or area" autocomplete="off">
+            <input type="text" id="locationInput" name="location" placeholder="Enter your city or area" autocomplete="off">
+            <div id="locationDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:#1a2840;border:1px solid rgba(255,255,255,.12);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:100;margin-top:4px;overflow:hidden"></div>
             <span class="err-msg">Please enter your service Location.</span>
           </div>
         </div>
@@ -1620,24 +1621,53 @@ document.querySelectorAll('form[data-form]:not(#providerForm):not(#heroEarlyForm
 })();
 </script>
 <!-- Google Places Autocomplete -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGjcl_BQqsBtNRPsj0NSUDM5Is0E2KX0&libraries=places&loading=async" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGjcl_BQqsBtNRPsj0NSUDM5Is0E2KX0&libraries=places&loading=async&v=weekly" async defer></script>
 <script>
-function initPlaces(){
+window.addEventListener('load', async function(){
+  if(!window.google) return;
+  await google.maps.importLibrary('places');
+
   var input = document.getElementById('locationInput');
-  if(!input || !window.google) return;
-  var autocomplete = new google.maps.places.Autocomplete(input, {
-    componentRestrictions:{ country:'in' },
-    types:['(cities)'],
-    fields:['name']
+  var dropdown = document.getElementById('locationDropdown');
+  if(!input || !dropdown) return;
+
+  var service = new google.maps.places.AutocompleteService();
+  var timer;
+
+  input.addEventListener('input', function(){
+    clearTimeout(timer);
+    var val = input.value.trim();
+    if(val.length < 2){ dropdown.style.display='none'; return; }
+    timer = setTimeout(function(){
+      service.getPlacePredictions({
+        input: val,
+        componentRestrictions: { country: 'in' },
+        types: ['(cities)']
+      }, function(predictions, status){
+        dropdown.innerHTML = '';
+        if(status !== google.maps.places.PlacesServiceStatus.OK || !predictions){ dropdown.style.display='none'; return; }
+        predictions.forEach(function(p){
+          var item = document.createElement('div');
+          item.textContent = p.structured_formatting.main_text + (p.structured_formatting.secondary_text ? ', ' + p.structured_formatting.secondary_text : '');
+          item.style.cssText = 'padding:10px 16px;color:#d4dce8;font-size:.88rem;cursor:pointer;border-top:1px solid rgba(255,255,255,.06)';
+          item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,224,0,.08)'; });
+          item.addEventListener('mouseleave', function(){ item.style.background=''; });
+          item.addEventListener('mousedown', function(){
+            input.value = p.structured_formatting.main_text;
+            dropdown.style.display='none';
+            input.dispatchEvent(new Event('change'));
+          });
+          dropdown.appendChild(item);
+        });
+        dropdown.style.display='block';
+      });
+    }, 300);
   });
-  autocomplete.addListener('place_changed', function(){
-    var place = autocomplete.getPlace();
-    if(place.name) input.value = place.name;
+
+  document.addEventListener('click', function(e){
+    if(!input.contains(e.target) && !dropdown.contains(e.target)) dropdown.style.display='none';
   });
-}
-window.addEventListener('load', function(){
-  if(window.google && window.google.maps) initPlaces();
-  else document.querySelector('script[src*="maps.googleapis"]').addEventListener('load', initPlaces);
+  input.addEventListener('keydown', function(e){ if(e.key==='Escape') dropdown.style.display='none'; });
 });
 </script>
 </script>
