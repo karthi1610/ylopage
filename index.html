@@ -834,6 +834,9 @@ footer{background:var(--navy);color:#9eabbd;padding:54px 0 28px;border-top:1px s
             <label>Your Service Location</label>
             <input type="text" id="locationInput" name="location" placeholder="Enter your city or area" autocomplete="off">
             <div id="locationDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:#1a2840;border:1px solid rgba(255,255,255,.12);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:100;margin-top:4px;overflow:hidden"></div>
+            <input type="hidden" id="locCity" name="city">
+            <input type="hidden" id="locDistrict" name="district">
+            <input type="hidden" id="locCountry" name="country" value="India">
             <span class="err-msg">Please enter your service Location.</span>
           </div>
         </div>
@@ -1653,6 +1656,11 @@ window.addEventListener('load', async function(){
           item.addEventListener('mouseleave', function(){ item.style.background=''; });
           item.addEventListener('mousedown', function(){
             input.value = p.description;
+            var secondary = p.structured_formatting.secondary_text || '';
+            var parts = secondary.split(',').map(function(s){ return s.trim(); });
+            document.getElementById('locCity').value = p.structured_formatting.main_text || '';
+            document.getElementById('locDistrict').value = parts[0] || '';
+            document.getElementById('locCountry').value = 'India';
             dropdown.style.display='none';
             input.dispatchEvent(new Event('change'));
           });
