@@ -265,9 +265,10 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,253,247,.9);backdrop
 .pac-item:hover,.pac-item-selected{background:rgba(255,224,0,.08)}
 .pac-item-query{color:#fff;font-weight:500}
 .pac-matched{color:var(--yellow)}
-.pac-icon,.pac-icon-marker,.hdpi .pac-icon{display:none!important;width:0!important;height:0!important;margin:0!important;padding:0!important}
+.pac-icon,.pac-icon-marker,.hdpi .pac-icon,.pac-item-icon{display:none!important;width:0!important;height:0!important;margin:0!important;padding:0!important;visibility:hidden!important}
 .pac-logo{display:none!important}
-.pac-logo:after{display:none!important}
+.pac-logo::after{display:none!important}
+.pac-container::after{display:none!important}
 .form-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:26px}
 .form-actions .btn{width:auto!important;flex-shrink:0}
 
@@ -1619,31 +1620,25 @@ document.querySelectorAll('form[data-form]:not(#providerForm):not(#heroEarlyForm
 })();
 </script>
 <!-- Google Places Autocomplete -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGjcl_BQqsBtNRPsj0NSUDM5Is0E2KX0&libraries=places&loading=async&v=weekly" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGjcl_BQqsBtNRPsj0NSUDM5Is0E2KX0&libraries=places&loading=async" async defer></script>
 <script>
-async function initPlaces(){
-  await google.maps.importLibrary('places');
+function initPlaces(){
   var input = document.getElementById('locationInput');
-  if(!input) return;
-
-  var placeAuto = new google.maps.places.PlaceAutocompleteElement({
+  if(!input || !window.google) return;
+  var autocomplete = new google.maps.places.Autocomplete(input, {
     componentRestrictions:{ country:'in' },
-    types:['(cities)']
+    types:['(cities)'],
+    fields:['name']
   });
-
-  placeAuto.style.cssText = 'width:100%;border:none;outline:none;background:transparent;font-family:inherit;font-size:inherit;color:inherit';
-  input.parentNode.replaceChild(placeAuto, input);
-
-  placeAuto.addEventListener('gmp-placeselect', function(e){
-    var place = e.place;
-    var hidden = document.createElement('input');
-    hidden.type = 'hidden';
-    hidden.name = 'location';
-    hidden.value = place.displayName || '';
-    placeAuto.parentNode.appendChild(hidden);
+  autocomplete.addListener('place_changed', function(){
+    var place = autocomplete.getPlace();
+    if(place.name) input.value = place.name;
   });
 }
-window.addEventListener('load', initPlaces);
+window.addEventListener('load', function(){
+  if(window.google && window.google.maps) initPlaces();
+  else document.querySelector('script[src*="maps.googleapis"]').addEventListener('load', initPlaces);
+});
 </script>
 </script>
 <!-- Instagram Coming Soon Popup -->
