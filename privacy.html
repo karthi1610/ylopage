@@ -30,7 +30,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,253,247,.92);backdro
 .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,212,0,.12);border:1px solid rgba(255,212,0,.25);border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:600;color:#FFD400;letter-spacing:.04em;margin-bottom:20px}
 .badge span{width:6px;height:6px;border-radius:50%;background:#FFD400;display:block}
 .hero h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:14px}
-.hero p{font-size:.95rem;color:rgba(255,255,255,.5);max-width:520px}
+.hero p{font-size:.95rem;color:rgba(255,255,255,.5);max-width:700px;white-space:nowrap}
 
 /* CONTENT */
 .content{max-width:900px;margin:0 auto;padding:56px 24px 80px}
@@ -38,7 +38,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,253,247,.92);backdro
 /* TOC */
 .toc{background:#f3f1ea;border-radius:16px;padding:28px 32px;margin-bottom:48px}
 .toc h3{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:#0D1B2A;opacity:.4;text-transform:uppercase;margin-bottom:16px}
-.toc ol{padding-left:18px;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:row;gap:6px 24px}
+.toc ul{padding-left:18px;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:row;gap:6px 24px}
 .toc li{font-size:.88rem}
 .toc a{color:#0D1B2A;text-decoration:none;font-weight:500;opacity:.7;transition:opacity .15s}
 .toc a:hover{opacity:1;color:#0D1B2A}
@@ -70,7 +70,7 @@ footer a{color:rgba(255,224,0,.6);text-decoration:none}
 footer a:hover{color:#FFD400}
 
 @media(max-width:680px){
-  .toc ol{grid-template-columns:1fr}
+  .toc ul{grid-template-columns:1fr}
   .hero{padding:40px 16px 36px}
   .content{padding:36px 16px 60px}
   .toc{padding:20px}
@@ -93,7 +93,8 @@ footer a:hover{color:#FFD400}
   <div class="hero-inner">
     
     <h1>Privacy Policy</h1>
-    <p>Updated June 25, 2026 — This policy explains how Ylopage collects, uses, and protects your personal information.</p>
+    <p style="font-size:.8rem;opacity:.5;margin-bottom:6px">Updated June 25, 2026</p>
+    <p>This policy explains how Ylopage collects, uses, and protects your personal information.</p>
   </div>
 </div>
 
@@ -101,8 +102,8 @@ footer a:hover{color:#FFD400}
 
   <div class="toc">
     <h3>Contents</h3>
-    <ol>
-      <li><a href="#definitions">Definitions & Key Terms</a></li>
+    <ul>
+      <li><a href="#definitions">Definitions &amp; Key Terms</a></li>
       <li><a href="#collect">What Information We Collect</a></li>
       <li><a href="#enduser">End User Information</a></li>
       <li><a href="#thirdparty">Third Party Information</a></li>
@@ -113,10 +114,8 @@ footer a:hover{color:#FFD400}
       <li><a href="#security">How We Protect It</a></li>
       <li><a href="#update">Updating Your Information</a></li>
       <li><a href="#cookies">Cookies</a></li>
-      <li><a href="#gdpr">GDPR</a></li>
-      <li><a href="#california">California Residents</a></li>
       <li><a href="#contact">Contact Us</a></li>
-    </ol>
+    </ul>
   </div>
 
   <div class="policy-section">
@@ -133,6 +132,7 @@ footer a:hover{color:#FFD400}
       <li><strong>Device:</strong> Any internet-connected device such as a phone, tablet, or computer used to visit Ylopage.</li>
       <li><strong>IP Address:</strong> A number assigned to every device connected to the Internet, often used to identify approximate location.</li>
       <li><strong>Personal Data:</strong> Any information that directly or indirectly allows for the identification of a natural person.</li>
+      <li><strong>Provider:</strong> A company, organisation or person that signs up to use and participate in service providing on the Ylopage Service.</li>
       <li><strong>Service:</strong> The service provided by Ylopage as described on this platform.</li>
       <li><strong>Website:</strong> Ylopage's site, accessible at ylopage.com.</li>
       <li><strong>You:</strong> A person or entity registered with Ylopage to use the Services.</li>
@@ -148,6 +148,9 @@ footer a:hover{color:#FFD400}
       <li>Email Addresses</li>
       <li>Mailing Addresses</li>
       <li>Job Titles</li>
+      <li>Skilled Service / Profession</li>
+      <li>Location / Service Area</li>
+      <li>Work Experience</li>
     </ul>
   </div>
 
@@ -228,30 +231,6 @@ footer a:hover{color:#FFD400}
     <p>We may change our Service and policies, and we may need to make changes to this Privacy Policy so that they accurately reflect our Service and policies. Unless otherwise required by law, we will notify you before we make changes to this Privacy Policy and give you an opportunity to review them before they go into effect.</p>
   </div>
 
-  <div class="policy-section" id="gdpr">
-    <h2>Information about GDPR</h2>
-    <p>We may be collecting and using information from you if you are from the European Economic Area (EEA). The GDPR is relevant to any globally operating company. Our customers' data is important irrespective of where they are located, which is why we have implemented GDPR controls as our baseline standard for all our operations worldwide.</p>
-    <p>The Data Protection Principles require that:</p>
-    <ul>
-      <li>Personal data collected must be processed in a fair, legal, and transparent way</li>
-      <li>Personal data should only be collected to fulfil a specific purpose</li>
-      <li>Personal data should be held no longer than necessary to fulfil its purpose</li>
-      <li>People covered by the GDPR have the right to access, copy, update, delete, restrict, or move their own personal data</li>
-    </ul>
-    <p>We store all personal data for up to 6 years unless your account is deleted, in which case we dispose of all data within 60 days in accordance with our Terms of Service.</p>
-  </div>
-
-  <div class="policy-section" id="california">
-    <h2>California Residents</h2>
-    <p>The California Consumer Privacy Act (CCPA) requires us to disclose categories of Personal Information we collect and how we use it. California residents may exercise the following rights:</p>
-    <ul>
-      <li><strong>Right to Know and Access</strong> — request information about what categories of Personal Information we collect, use, or share</li>
-      <li><strong>Right to Equal Service</strong> — we will not discriminate against you if you exercise your privacy rights</li>
-      <li><strong>Right to Delete</strong> — request closure of your account and deletion of your Personal Information</li>
-    </ul>
-    <p>We do not sell the Personal Information of our users. If you make a request, we have one month to respond. Please contact us to exercise any of these rights.</p>
-  </div>
-
   <div class="policy-section">
     <h2>Governing Law</h2>
     <p>This Privacy Policy is governed by the laws of India without regard to its conflict of laws provision. You consent to the exclusive jurisdiction of the courts in connection with any action or dispute arising between the parties under or in connection with this Privacy Policy.</p>
@@ -259,7 +238,7 @@ footer a:hover{color:#FFD400}
 
   <div class="policy-section">
     <h2>Your Consent</h2>
-    <p>By using Ylopage, registering an account, or making a purchase, you hereby consent to our Privacy Policy and agree to its terms. If you do not agree to this Privacy Policy, you should not engage with our website or use our services.</p>
+    <p>By using Ylopage, registering an account, making a purchase, or booking a service, you hereby consent to our Privacy Policy and agree to its terms. Service providers who register also consent to sharing their professional details — including service category, work experience, and location — to enable customer discovery and bookings. If you do not agree to this Privacy Policy, you should not engage with our website or use our services.</p>
   </div>
 
   <div class="policy-section" id="contact">
@@ -270,9 +249,9 @@ footer a:hover{color:#FFD400}
   <div class="contact-box">
     <h3>Have a question about your data?</h3>
     <p>Our team is happy to help with any privacy-related questions.</p>
-    <a href="mailto:support@ylopage.com">
+    <a href="mailto:writetous@ylopage.com">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1B2A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      support@ylopage.com
+      writetous@ylopage.com
     </a>
   </div>
 

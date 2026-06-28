@@ -26,11 +26,11 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,253,247,.92);backdro
 .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,212,0,.12);border:1px solid rgba(255,212,0,.25);border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:600;color:#FFD400;letter-spacing:.04em;margin-bottom:20px}
 .badge span{width:6px;height:6px;border-radius:50%;background:#FFD400;display:block}
 .hero h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:14px}
-.hero p{font-size:.95rem;color:rgba(255,255,255,.5);max-width:520px}
+.hero p{font-size:.95rem;color:rgba(255,255,255,.5);max-width:700px;white-space:nowrap}
 .content{max-width:900px;margin:0 auto;padding:56px 24px 80px}
 .toc{background:#f3f1ea;border-radius:16px;padding:28px 32px;margin-bottom:48px}
 .toc h3{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:#0D1B2A;opacity:.4;text-transform:uppercase;margin-bottom:16px}
-.toc ol{padding-left:18px;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:row;gap:6px 24px}
+.toc ul{padding-left:18px;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:row;gap:6px 24px}
 .toc li{font-size:.88rem}
 .toc a{color:#0D1B2A;text-decoration:none;font-weight:500;opacity:.7;transition:opacity .15s}
 .toc a:hover{opacity:1}
@@ -52,7 +52,7 @@ footer{background:#0D1B2A;padding:24px;text-align:center}
 footer p{font-size:.82rem;color:rgba(255,255,255,.3)}
 footer a{color:rgba(255,224,0,.6);text-decoration:none}
 footer a:hover{color:#FFD400}
-@media(max-width:680px){.toc ol{grid-template-columns:1fr}.hero{padding:40px 16px 36px}.content{padding:36px 16px 60px}.toc{padding:20px}}
+@media(max-width:680px){.toc ul{grid-template-columns:1fr}.hero{padding:40px 16px 36px}.content{padding:36px 16px 60px}.toc{padding:20px}}
 </style>
 </head>
 <body>
@@ -71,14 +71,15 @@ footer a:hover{color:#FFD400}
   <div class="hero-inner">
     
     <h1>Disclaimer</h1>
-    <p>Updated June 25, 2026 — Please read this Disclaimer carefully before using ylopage.com.</p>
+    <p style="font-size:.8rem;opacity:.5;margin-bottom:6px">Updated June 25, 2026</p>
+    <p>Please read this Disclaimer carefully before using ylopage.com.</p>
   </div>
 </div>
 
 <div class="content">
   <div class="toc">
     <h3>Contents</h3>
-    <ol>
+    <ul>
       <li><a href="#definitions">Definitions</a></li>
       <li><a href="#liability">Limited Liability</a></li>
       <li><a href="#errors">Errors &amp; Omissions</a></li>
@@ -88,7 +89,7 @@ footer a:hover{color:#FFD400}
       <li><a href="#consent">Your Consent</a></li>
       <li><a href="#changes">Changes to Disclaimer</a></li>
       <li><a href="#contact">Contact Us</a></li>
-    </ol>
+    </ul>
   </div>
 
   <div class="policy-section" id="definitions">
@@ -148,9 +149,9 @@ footer a:hover{color:#FFD400}
   <div class="contact-box" id="contact">
     <h3>Questions about this Disclaimer?</h3>
     <p>Don't hesitate to reach out if you have any questions.</p>
-    <a href="mailto:support@ylopage.com">
+    <a href="mailto:writetous@ylopage.com">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1B2A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      support@ylopage.com
+      writetous@ylopage.com
     </a>
   </div>
 </div>

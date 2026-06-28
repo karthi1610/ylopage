@@ -176,6 +176,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,253,247,.9);backdrop
 .hero-track figure{flex:0 0 360px;width:360px;height:230px;border-radius:18px;overflow:hidden;opacity:1}
 .hero-track figure.mid{opacity:1}
 .hero-track img{width:100%;height:100%;object-fit:cover}
+.hero-track img[src*="tutoring_new"]{object-position:center;transform:scale(0.85)}
 
 /* DARK SECTIONS */
 .dark{background:var(--navy);color:#fff;background-image:var(--dot);background-size:22px 22px}
@@ -326,11 +327,18 @@ h2.title{font-size:clamp(1.9rem,4vw,2.5rem);font-weight:700;letter-spacing:-.01e
 .svc-col{display:flex;flex-direction:column;gap:10px;flex:1}
 .svc-col-mid{margin-top:44px}
 .svc-col img{width:100%;aspect-ratio:1/1;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.13);display:block;flex-shrink:0}
+.svc-col img[src*="tutoring_new"]{object-position:center center;object-fit:cover;transform:scale(0.85)}
 .svc-scroll-track{display:none}
 .svc-right{flex:1;display:flex;flex-direction:column;justify-content:center}
-.svc-right .svc-title{font-weight:700;font-size:2rem;color:var(--navy);text-align:center;margin-bottom:18px}
-.svc-tags{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.svc-tags .tag{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:.85rem;font-weight:500;color:var(--navy)}
+.svc-right .svc-title{font-weight:700;font-size:2rem;color:var(--navy);text-align:center;margin-bottom:28px}
+.svc-tags{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;perspective:600px}
+.svc-tags .tag{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:.85rem;font-weight:500;color:var(--navy);opacity:0;cursor:pointer;transition:transform .2s cubic-bezier(0,0,0,1),box-shadow .2s ease,background .2s ease,color .2s ease,border-color .2s ease}
+.svc-tags .tag svg{transition:stroke .2s ease}
+.svc-tags .tag:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 8px 20px rgba(13,27,42,.12);background:var(--navy);color:var(--yellow);border-color:var(--navy)}
+.svc-tags .tag:hover svg{stroke:var(--yellow)}
+.svc-tags .tag:active{transform:scale(0.96)}
+.svc-tags .tag.svc-visible{animation:svcFlipIn .5s ease forwards}
+@keyframes svcFlipIn{from{opacity:0;transform:rotateX(-90deg) scale(0.9)}to{opacity:1;transform:rotateX(0deg) scale(1)}}
 .svc-tags .tag svg{width:15px;height:15px;stroke:var(--navy);flex-shrink:0}
 
 /* HOW IT WORKS */
@@ -1126,7 +1134,7 @@ footer{background:var(--navy);color:#9eabbd;padding:54px 0 28px;border-top:1px s
         <p style="margin-top:10px;font-size:.8rem;color:rgba(255,224,0,0.4);letter-spacing:.04em;font-weight:500;white-space:nowrap">Real Professionals · Real Brands · One Platform</p>
         <div class="foot-social">
           <a href="https://www.linkedin.com/company/ylopage" aria-label="LinkedIn"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM6 9H2v12h4zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+          <a href="#" aria-label="Instagram" onclick="showInstaPopup(event)"><svg viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
         </div>
       </div>
       <div class="foot-col">
@@ -1559,6 +1567,26 @@ document.querySelectorAll('form[data-form]:not(#providerForm):not(#heroEarlyForm
   });
 })();
 
+/* ---- Launching With These Services pill animation ---- */
+(function(){
+  var tags = document.querySelectorAll('.svc-tags .tag');
+  if(!tags.length) return;
+  var triggered = false;
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting && !triggered){
+        triggered = true;
+        tags.forEach(function(tag, i){
+          tag.style.animationDelay = (i * 80) + 'ms';
+          tag.classList.add('svc-visible');
+        });
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(document.querySelector('.svc-tags'));
+})();
+
 /* ---- Centred scroll for specific anchors ---- */
 (function(){
   var targets = ['services','providerForm'];
@@ -1608,6 +1636,34 @@ function initPlaces(){
     if(place.name) input.value = place.name;
   });
 }
+</script>
+<!-- Instagram Coming Soon Popup -->
+<div id="instaPopup" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(13,27,42,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:20px;padding:36px 32px;max-width:360px;width:90%;text-align:center;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .35s cubic-bezier(0,0,0,1)">
+    <button onclick="hideInstaPopup()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#9eabbd;line-height:1">✕</button>
+    <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>
+    </div>
+    <h3 style="font-family:'Onest',sans-serif;font-size:1.1rem;font-weight:700;color:#0D1B2A;margin-bottom:10px">Coming Soon on Instagram!</h3>
+    <p style="font-family:'Onest',sans-serif;font-size:.9rem;color:#6b7280;line-height:1.6">We are yet to create our presence in Instagram, we will soon be there 😊</p>
+    <button onclick="hideInstaPopup()" style="margin-top:22px;padding:10px 28px;background:#0D1B2A;color:#FFD400;border:none;border-radius:999px;font-family:'Onest',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer">Got it!</button>
+  </div>
+</div>
+<style>
+@keyframes popIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
+</style>
+<script>
+function showInstaPopup(e){
+  e.preventDefault();
+  var p=document.getElementById('instaPopup');
+  p.style.display='flex';
+}
+function hideInstaPopup(){
+  document.getElementById('instaPopup').style.display='none';
+}
+document.getElementById('instaPopup').addEventListener('click',function(e){
+  if(e.target===this) hideInstaPopup();
+});
 </script>
 </body>
 </html>
