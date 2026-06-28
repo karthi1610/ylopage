@@ -794,9 +794,9 @@ footer{background:var(--navy);color:#9eabbd;padding:54px 0 28px;border-top:1px s
                 <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
               </div>
               <div class="ms-dropdown" id="msDropdown" role="listbox" aria-multiselectable="true">
-                <div class="ms-option" data-value="Saloon for Women" role="option"><span class="ms-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Saloon for Women</div>
+                <div class="ms-option" data-value="Salon for Women" role="option"><span class="ms-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Salon for Women</div>
                 <div class="ms-option" data-value="Women's Spa" role="option"><span class="ms-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Women's Spa</div>
-                <div class="ms-option" data-value="Saloon for Men" role="option"><span class="ms-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Saloon for Men</div>
+                <div class="ms-option" data-value="Salon for Men" role="option"><span class="ms-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Salon for Men</div>
                 <div class="ms-option" data-value="Men's Spa" role="option"><span class="ms-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Men's Spa</div>
                 <div class="ms-option" data-value="House Cleaning" role="option"><span class="ms-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>House Cleaning</div>
                 <div class="ms-option" data-value="Appliance Repair" role="option"><span class="ms-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Appliance Repair</div>
@@ -835,7 +835,7 @@ footer{background:var(--navy);color:#9eabbd;padding:54px 0 28px;border-top:1px s
             <input type="text" id="locationInput" name="location" placeholder="Enter your city or area" autocomplete="off">
             <div id="locationDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:#1a2840;border:1px solid rgba(255,255,255,.12);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:100;margin-top:4px;overflow:hidden"></div>
             <input type="hidden" id="locCity" name="city">
-            <input type="hidden" id="locDistrict" name="district">
+            <input type="hidden" id="locState" name="state">
             <input type="hidden" id="locCountry" name="country" value="India">
             <span class="err-msg">Please enter your service Location.</span>
           </div>
@@ -1656,11 +1656,17 @@ window.addEventListener('load', async function(){
           item.addEventListener('mouseleave', function(){ item.style.background=''; });
           item.addEventListener('mousedown', function(){
             input.value = p.description;
-            var secondary = p.structured_formatting.secondary_text || '';
-            var parts = secondary.split(',').map(function(s){ return s.trim(); });
-            document.getElementById('locCity').value = p.structured_formatting.main_text || '';
-            document.getElementById('locDistrict').value = parts[0] || '';
-            document.getElementById('locCountry').value = 'India';
+            // p.description = "Brindhavan Towers, Anna Main Road, K. K. Nagar, Chennai, Tamil Nadu, India"
+            // terms array from Google has structured data
+            var terms = p.terms || [];
+            var len = terms.length;
+            // Last term = Country, second last = State, third last = City
+            var country  = len >= 1 ? terms[len-1].value : 'India';
+            var state    = len >= 2 ? terms[len-2].value : '';
+            var city     = len >= 3 ? terms[len-3].value : '';
+            document.getElementById('locCity').value    = city;
+            document.getElementById('locState').value   = state;
+            document.getElementById('locCountry').value = country;
             dropdown.style.display='none';
             input.dispatchEvent(new Event('change'));
           });
