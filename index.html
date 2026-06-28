@@ -176,7 +176,6 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,253,247,.9);backdrop
 .hero-track figure{flex:0 0 360px;width:360px;height:230px;border-radius:18px;overflow:hidden;opacity:1}
 .hero-track figure.mid{opacity:1}
 .hero-track img{width:100%;height:100%;object-fit:cover}
-.hero-track img[src*="tutoring_new"]{object-position:center;transform:scale(0.85)}
 
 /* DARK SECTIONS */
 .dark{background:var(--navy);color:#fff;background-image:var(--dot);background-size:22px 22px}
@@ -327,7 +326,6 @@ h2.title{font-size:clamp(1.9rem,4vw,2.5rem);font-weight:700;letter-spacing:-.01e
 .svc-col{display:flex;flex-direction:column;gap:10px;flex:1}
 .svc-col-mid{margin-top:44px}
 .svc-col img{width:100%;aspect-ratio:1/1;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.13);display:block;flex-shrink:0}
-.svc-col img[src*="tutoring_new"]{object-position:center center;object-fit:cover;transform:scale(0.85)}
 .svc-scroll-track{display:none}
 .svc-right{flex:1;display:flex;flex-direction:column;justify-content:center}
 .svc-right .svc-title{font-weight:700;font-size:2rem;color:var(--navy);text-align:center;margin-bottom:28px}
@@ -1621,21 +1619,32 @@ document.querySelectorAll('form[data-form]:not(#providerForm):not(#heroEarlyForm
 })();
 </script>
 <!-- Google Places Autocomplete -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGjcl_BQqsBtNRPsj0NSUDM5Is0E2KX0&libraries=places&callback=initPlaces" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGjcl_BQqsBtNRPsj0NSUDM5Is0E2KX0&libraries=places&loading=async&v=weekly" async defer></script>
 <script>
-function initPlaces(){
+async function initPlaces(){
+  await google.maps.importLibrary('places');
   var input = document.getElementById('locationInput');
   if(!input) return;
-  var autocomplete = new google.maps.places.Autocomplete(input, {
-    componentRestrictions: { country: 'in' },
-    types: ['(cities)'],
-    fields: ['formatted_address','name']
+
+  var placeAuto = new google.maps.places.PlaceAutocompleteElement({
+    componentRestrictions:{ country:'in' },
+    types:['(cities)']
   });
-  autocomplete.addListener('place_changed', function(){
-    var place = autocomplete.getPlace();
-    if(place.name) input.value = place.name;
+
+  placeAuto.style.cssText = 'width:100%;border:none;outline:none;background:transparent;font-family:inherit;font-size:inherit;color:inherit';
+  input.parentNode.replaceChild(placeAuto, input);
+
+  placeAuto.addEventListener('gmp-placeselect', function(e){
+    var place = e.place;
+    var hidden = document.createElement('input');
+    hidden.type = 'hidden';
+    hidden.name = 'location';
+    hidden.value = place.displayName || '';
+    placeAuto.parentNode.appendChild(hidden);
   });
 }
+window.addEventListener('load', initPlaces);
+</script>
 </script>
 <!-- Instagram Coming Soon Popup -->
 <div id="instaPopup" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(13,27,42,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center">
